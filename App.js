@@ -1,35 +1,87 @@
+import React from "react";
+import ReactDOM from "react-dom/client"
 
-// this is  basic example of react
-// const heading = React.createElement("h1",{id: "heading"}, "Hello world from React");
-// const root = ReactDOM.createRoot(document.getElementById("root"))
-// root.render(heading);
-
-/** To create nested strucutre like this
- * <div id="parent1">
- *    <div id= "child1">
- *       <h1>I'm H1 tag</h1>
- *       <h2>i'm h2 tag </h2>
- *    </div>
-    * <div id= "child2">
-    *       <h3>I'm H3 tag</h1>
-    *       <h4>i'm h4 tag </h2>
-    *    </div>
- * </div>
+/**
+ * -Header
+ *  - Logo
+ *  - Nav bar
+ * -Body
+ *  -Search bar
+ *  -Restaurant container
+ *    -Name, cuisine, ETA, rating
+ * -Footer
+ *  -copyright
+ *  - adreess
  */
 
-const parent = React.createElement("div",
-   {id: "parent"},[
-      React.createElement("div", {id: "child1"}, [
-         React.createElement("h1", {}, "I'm h1 tag"),
-         React.createElement("h2", {}, "I'm h2 tag")
-      ]),
-      React.createElement("div", {id: "child2"}, [
-         React.createElement("h3", {}, "I'm h3 tag"),
-         React.createElement("h4", {}, "I'm h4 tag")
-      ]),
-   ]
-);
-const root = ReactDOM.createRoot(document.getElementById('root'));
-//passing a react element inside the root
-root.render(parent);
+const Header = () => {
+   return (
+      <div className="header">
+          <div className="logo">
+            <img className="logo-img"src="https://marketplace.canva.com/EAFaFUz4aKo/2/0/1600w/canva-yellow-abstract-cooking-fire-free-logo-JmYWTjUsE-Q.jpg"></img>
+          </div>
+          <div className="nav-links">
+            <ul>
+               <li>Home</li>
+               <li>Sign In</li>
+               <li>Contact Us</li>
+               <li>Cart</li>
+            </ul>
+          </div>
+      </div>
+      
+   )
+}
 
+const RestaurantCard = () => {
+   return (
+      <div className="res-card" style={ {backgroundColor: "lightblue"}}>
+         <img className="card-img" 
+           alt="card-img"
+           src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/wpw09wikehogd62sxz8m"
+         ></img>
+         <h2>Chulha Chowki</h2>
+         <h3>North Indian, Chinese</h3>
+         <h3>4.4 stars</h3>
+         <h3>40 mins</h3>
+      </div>
+   )
+}
+
+const Body = () =>{
+   return (
+      <div className="body">
+         <div class="search">Search</div>
+         <div class="res-container">
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         <RestaurantCard/>
+         </div>
+      </div>
+   )
+}
+const AppLayout = () => {
+   return (
+      <div className="app">
+       <Header/>
+       <Body/>
+      </div>
+   )
+}
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(<AppLayout/>)
