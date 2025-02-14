@@ -2011,7 +2011,7 @@ const Body = () =>{
          {/* <RestaurantCard resName="KFC" resRating= "4.4"/> */}
          {/* <RestaurantCard resData={resList[0]}/>
          <RestaurantCard resData={resList[1]}/> */}
-         {resList.map(restaurant => <RestaurantCard resData={restaurant}/>)}
+         {resList.map(restaurant => <RestaurantCard key={restaurant.info.id} resData={restaurant}/>)}
          </div>
       </div>
    )
