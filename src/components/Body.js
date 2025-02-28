@@ -1,8 +1,9 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withPromotedRestaurantCard} from "./RestaurantCard";
 import resList from "../utils/mockData";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   //Array de-structuring, useState is react hook which return Array
@@ -14,6 +15,9 @@ const Body = () => {
   const [ filteredListOfRestaurants, setFilterredListOfRestaurants] = useState([]);
   const [searchTxt, setSearchTxt] = useState("");
 
+  const RestaurantCardPromoted = withPromotedRestaurantCard(RestaurantCard);
+  const {loggedInUser, setUserName} = useContext(UserContext);
+ 
   /**
    * useEffect is to load data after rendering i.e. re-rendering, takes two arguments
    * - callback fn called after UI render
@@ -33,6 +37,7 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
     setFilterredListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    console.log(listofRestaurants);
   };
 
   //conditional rendering
@@ -46,18 +51,18 @@ const Body = () => {
     <ShimmerUI />
   ) : (
     <div className="body">
-      <div className="filter">
-        <div className="search">
+      <div className="flex">
+        <div className="search m-4 p-4">
           <input
             type="text"
-            className="search-box"
+            className="border border-solid border-black"
             value={searchTxt}
             onChange={(e) => {
               setSearchTxt(e.target.value);
             }}
           />
           <button
-            className="search-btn"
+            className="px-4 py-2 bg-green-100 m-4 rounded-lg"
             onClick={() => {
               const searchList = listofRestaurants.filter((res) => {
                 return res?.info?.name
@@ -70,8 +75,9 @@ const Body = () => {
             Search
           </button>
         </div>
+        <div className="m-4 p-4 flex items-center">
         <button
-          className="filter-btn"
+          className="px-4 py-2 bg-gray-100 rounded-lg"
           onClick={() => {
             const filterLists = listofRestaurants.filter(
               (res) => res.info.avgRating > 4.5
@@ -82,13 +88,26 @@ const Body = () => {
         >
           Top Rated restaurants
         </button>
+        </div>
+        <div className="m-4 p-4">
+          <label className="font-bold">UserName :</label>
+          <input type="text" className="border border-black px-2 m-2 rounded-md"value={loggedInUser}
+            onChange={(e)=>setUserName(e.target.value)}/>
+        </div>
+        
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap">
         {/* <RestaurantCard resName="KFC" resRating= "4.4"/> */}
         {/* <RestaurantCard resData={resList[0]}/>
           <RestaurantCard resData={resList[1]}/> */}
         {(filteredListOfRestaurants || []).map((restaurant) => (
-          <Link to={"/restaurants/"+restaurant.info.id}><RestaurantCard key={restaurant.info.id} resData={restaurant} /></Link>
+          <Link to={"/restaurants/"+restaurant.info.id}>
+          {
+            restaurant?.info?.sla?.deliveryTime < 28 ? <RestaurantCardPromoted key={restaurant.info.id} resData={restaurant}/>
+            :<RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          }
+         
+          </Link>
         ))}
       </div>
     </div>

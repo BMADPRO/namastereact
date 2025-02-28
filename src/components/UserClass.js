@@ -32,14 +32,14 @@ class UserClass extends React.Component{
     componentWillUnmount(){
         // called when page changes(unmounting)
         clearInterval(this.timer);
-        console("component unmount")
+        console.log("component unmount")
     }
     
     render(){
         console.log("child render");
         const {name} = this.props;
         return(
-            <div className="user-card">
+            <div className="user-card m-4 p-4 bg-gray-50 rounded-lg">
             <h2>Name: {name}</h2>
             <h3>Location: Delhi</h3>
             <h3>{this.state.count}</h3>
